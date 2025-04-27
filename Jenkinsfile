@@ -11,16 +11,6 @@ pipeline {
                 git 'https://github.com/siddhi709/CarrierNavigator.git'
             }
         }
-
-        stage('Set up Python') {
-            steps {
-                sh 'python3 -m venv $VENV_DIR'
-                sh '$VENV_DIR/bin/pip install --upgrade pip'
-                sh '$VENV_DIR/bin/pip install -r requirements.txt'
-                sh '$VENV_DIR/bin/pip install pytest'
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 sh '$VENV_DIR/bin/pytest tests/'
