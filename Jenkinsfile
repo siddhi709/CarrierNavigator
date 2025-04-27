@@ -15,15 +15,15 @@ pipeline {
         stage('Set up Python') {
             steps {
                 sh 'python3 -m venv $VENV_DIR'
-                sh './$VENV_DIR/bin/pip install --upgrade pip'
-                sh './$VENV_DIR/bin/pip install -r requirements.txt'
-                sh './$VENV_DIR/bin/pip install pytest'
+                sh '$VENV_DIR/bin/pip install --upgrade pip'
+                sh '$VENV_DIR/bin/pip install -r requirements.txt'
+                sh '$VENV_DIR/bin/pip install pytest'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh './$VENV_DIR/bin/pytest tests/'
+                sh '$VENV_DIR/bin/pytest tests/'
             }
         }
 
@@ -32,7 +32,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                sh './$VENV_DIR/bin/python app.py'
+                sh '$VENV_DIR/bin/python app.py'
             }
         }
     }
@@ -44,3 +44,4 @@ pipeline {
         }
     }
 }
+
