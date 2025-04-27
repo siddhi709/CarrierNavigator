@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests using pytest'
-                    // Ensure pytest is already installed in the system, as we are skipping Python setup
+                    // Ensure pytest is already installed globally
                     sh 'pytest --maxfail=1 --disable-warnings -q > $TEST_RESULTS || true'
                 }
             }
@@ -27,12 +27,14 @@ pipeline {
 
         stage('Run Application') {
             when {
-                branch 'main'
+                branch 'main'  // Keep this condition to ensure it only runs on main branch
             }
             steps {
                 script {
-                    echo 'Running application'
-                    // Ensure Python is already available on the system
+                    echo 'Checking for required packages'
+                    // Check and install pytest if it's missing
+                    sh 'python3 -c "import pytest" || pip3 install pytest'
+                    echo 'Running the application'
                     sh 'python3 app.py'
                 }
             }
